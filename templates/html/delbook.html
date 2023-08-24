@@ -1,0 +1,25 @@
+{% extends 'html/base.html' %}
+{% block title %}DeleteBook{% endblock title %}
+{% block content %}
+<div class="card col-md-4 mx-auto border rounded border-danger">
+    <h4  class="bg-danger text-light mt-2 pt-2 text-center">Delete Book</h4>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card-body">
+            <h6>Are You Going To Delete ?</h6>
+            <h5>Book Name   : {{delbk.btitle}}</h5>
+            <h5>Book Author : {{delbk.bauthor}}</h5>
+            
+           <div class="row mt-2">
+               <div class="col">
+                    <a href="{% url 'addbook' %}" class="btn btn-primary form-control">Back</a>
+               </div>
+               <div class="col">
+                    <input type="submit" class="btn btn-danger form-control" value="submit">
+               </div>
+           </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+

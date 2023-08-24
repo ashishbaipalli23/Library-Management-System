@@ -1,0 +1,76 @@
+{% load static %}
+<nav class="navbar navbar-expand-md bg-dark navbar-dark ">
+    <a class="navbar-brand" href="{% url 'hm' %}">
+      <img src="{% static 'images/icons/lib.png' %}" alt="not found" class="rounded-circle" height="40px" width="40px">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        {% if not user.is_authenticated %}
+        
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'hm' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/abt/' %}active{% endif %}" href="{% url 'abt' %}">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/cnt/' %}active{% endif %}" href="{% url 'cnt' %}">Contact Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/lgin/' %}active{% endif %}" href="{% url 'lgin' %}">Login/Register</a>
+        </li> 
+        {% else %}
+            {% if request.user.role_type == 1 %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'hm' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/stdprof/' %}active{% endif %}" href="{% url 'stdprof' %}">MyProfile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/cnt/' %}active{% endif %}" href="{% url 'cnt' %}">Contact Us</a>
+            </li>
+           {% if request.user.stdprofile.sstatus == 1 %}
+           
+           
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/reqbk/' %}active{% endif %}" href="{% url 'reqbk' %}">RequestBook</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/sdashboard/' %}active{% endif %}" href="{% url 'sdashboard' %}">Dashbord</a>
+        </li>
+           {% endif %}
+           
+            {% elif request.user.role_type == 2 %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'hm' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/teachprof/' %}active{% endif %}" href="{% url 'teachprof' %}">MyProfile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/cnt/' %}active{% endif %}" href="{% url 'cnt' %}">Contact Us</a>
+            </li>
+              {% if request.user.teacherprofile.tstatus == 1 %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/addbook/' %}active{% endif %}" href="{% url 'addbook' %}">AddBook</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/tdashboard/' %}active{% endif %}" href="{% url 'tdashboard' %}">Dashbord</a>
+            </li>
+              {% endif %}
+            {% else %}
+            {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link right {% if request.path == '/lgot/' %}active{% endif %} ml-auto" href="{% url 'lgot' %}">logout</a>
+        </li>
+        
+        
+        {% endif %}       
+      </ul>
+    </div>  
+  </nav>

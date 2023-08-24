@@ -1,0 +1,167 @@
+{% extends 'html/base.html' %}
+{% block title %}Staff-DashBoard{% endblock title %}
+{% block content %}
+
+<div class="card  border rounded border-primary">
+    <h4 class="card-header">Pending status</h4>
+    <div class="card-body">
+      {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                 {{message}}
+              </div>
+            {% endfor %}
+        {% endif %}
+        {% if pending %}
+        <table class="table table-hover table-striped border">
+          <thead class="bg-secondary text-light">
+            <tr>
+              <th>Sno.</th>
+              <th>Book Title</th>
+              <th>Requested By</th>
+              <th>Request Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book_request in pending %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{ book_request.book.btitle }}({{book_request.book.num_copies}})</td>
+                <td>{{ book_request.requested_by.username }},{{book_request.requested_by.eid}}</td>
+                <td>{{ book_request.request_date }}</td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#confirmModal{{ book_request.id }}">Approve</button>
+                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#rejectModal{{ book_request.id }}">Reject</button>
+                </td>
+              </tr>
+  
+              
+              <div class="modal fade" id="confirmModal{{ book_request.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmModalLabel">Confirm Action</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure you want to approve the book request for "{{ book_request.book.btitle }}" by "{{ book_request.requested_by.username }}"?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <a href="{% url 'approve_book_request' book_request.id %}" class="btn btn-primary">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              
+              <div class="modal fade" id="rejectModal{{ book_request.id }}" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="rejectModalLabel">Confirm Action</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Are you sure you want to reject the book request for "{{ book_request.book.btitle }}" by "{{ book_request.requested_by.username }}"?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <a href="{% url 'reject_book_request' book_request.id %}" class="btn btn-danger">Confirm</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No pending book requests at the moment.</p>
+      {% endif %}
+    </div>
+</div>
+
+<div class="card  border rounded border-primary mt-3">
+    <h4 class="card-header">Aproved Status, Pending Return</h4>
+    <div class="card-body">
+        {% if approve %}
+        <table class="table table-hover table-striped border">
+            <thead class="bg-secondary text-light">
+                <th>Sno.</th>
+                <th>Book Title</th>
+                <th>Approved To</th>
+                <th>Approved By</th>
+                <th>Requested Date</th>
+                <th>Approved Date</th>
+                <th>Return status</th>
+                
+            </thead>
+            {% for i in approve %}
+            <tbody>
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.book.btitle}}</td>
+                <td>{{i.requested_by_student.username}} ,{{i.requested_by.eid}}</td>
+                <td>{{i.approved_by_teacher.username}} ,{{i.approved_by_teacher.eid}}</td>
+                <td>{{i.request_date}}</td>
+                <td>{{i.approved_date}}</td>
+                <td>{% if i.return_status == 'Pending' %}
+                      <span class="badge badge-warning">Pending</span>
+                  {% elif i.return_status == 'Returned' %}
+                      <span class="badge badge-success">Returned</span>
+                  {% endif %}
+               </td>
+              </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No Approved book  at the moment.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card  border rounded border-primary mt-3">
+    <h4 class="card-header">Return Status</h4>
+    <div class="card-body">
+      {% if return_status %}
+      <table class="table table-hover table-striped border">
+        <thead class="bg-secondary text-light">
+          <th>Sno.</th>
+          <th>Book Title</th>
+          <th>Requested By</th>
+          <th>Approved By</th>
+          <th>Approved Date</th>
+          <th>Return Date</th>
+          
+        </thead>
+        <tbody>
+          {% for request in return_status %}
+          <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ request.book.btitle }}</td>
+              <td>{{ request.requested_by.username }}, {{ request.requested_by.eid }}</td>
+              <td>{{ request.approved_by_teacher.username }}, {{ request.approved_by_teacher.eid }}</td>
+              <td>{{ request.approved_date }}</td>
+              <td>{{ request.return_date }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+
+      </table>
+      {% else %}
+      <p>No Returned Book</p>
+      {% endif %}
+
+    </div>
+</div>
+
+
+
+{% endblock content %}

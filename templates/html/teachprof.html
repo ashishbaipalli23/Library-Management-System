@@ -1,0 +1,48 @@
+{% extends 'html/base.html' %}
+{% block title %}Teacher Profile{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4 card mr-2 h-50 shadow-lg border rounded border-danger">
+        <h4 class="bg-secondary text-light mt-2 pt-2 text-center">Teacher Details</h4>
+        <div class="card-body">
+            <h5>Teacher name  : {{request.user.username}}</h5>
+            <h5>Employee id   : {{request.user.eid}}</h5>
+            <h5>Teacher Staues: {% if request.user.teacherprofile.tstatus == 1 %}<span class="badge badge-success">Active</span>{% else %}<span class="badge badge-danger">InActive</span>{% endif %}</h5>
+            <a href="{% url 'updatet' %}" class="btn btn-info form-control">Update Profile</a>
+        </div>
+
+    </div>
+    {% if request.user.teacherprofile.tstatus == 1 %}
+    <div class="col card shadow-lg  rounded border-danger">
+        <h5  class="bg-secondary text-light mt-2 pt-2 text-center">Details of {{request.user.username}}</h5>
+        <div class="card-body">
+            <table class="table">
+                 <tr class="">
+                     <td>Name : {{request.user.username}} </td>
+                     <td>Branch : {{request.user.teacherprofile.tbranch}}</td>
+                     <td>Experience : {{request.user.teacherprofile.texpr}} years</td>
+                 </tr>
+                 <tr>
+                     <td>Role Type : {% if request.user.role_type == 2 %} Teacher
+                                     {% endif %}
+                     </td>
+                     <td>Email : {{request.user.email}}</td>
+                     <td>Status : {% if request.user.is_active == 1 %}
+                         <h5 class="badge badge-success">Active</h5>
+                         {% else %}
+                         <span class="badge badge-danger">InActive</span>
+                         {% endif %}</td>
+                 </tr>
+                 <tr>
+                     <td>Date joined : {{request.user.date_joined}}</td>
+                     <td>Last Login  : {{request.user.last_login}}</td>
+                 </tr>
+            </table>
+         </div>
+
+
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'html/base.html' %}
+{% block title %}Addbook{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4 h-100 mr-2 card border rounded border-dark">
+       <h4 class="bg-info text-light mt-2 pt-2 text-center">Add Book</h4>
+       <form method="post">
+        {% csrf_token %}
+        <div class="card-body">
+        {% for i in book %}
+         {{i}}
+        {% endfor %}
+          <div class="row">
+            <div class="col">
+                <input type="reset" class="btn btn-warning form-control text-light" value="Reset">
+            </div>
+            <div class="col">
+                <input type="submit" class="btn btn-success form-control" value="AddBook">
+            </div>
+          </div>
+        </div>
+       </form>
+    </div>
+    <div class="col card h-100 mr-2 border rounded border-dark">
+        <h4  class="bg-info text-light mt-2 pt-2 text-center">book details</h4>
+        <div class="card-body">
+          <div class="table table-hover table-striped border">
+            <table class="table">
+                <thead class="bg-dark text-light">
+                   <tr class="text-uppercase">
+                    <td>sno</td>
+                    <td>book_title</td>
+                    <td>author</td>
+                    <td>Dept_name</td>
+                    <td>actions</td>
+                   </tr>
+                </thead>
+                {% for i in sdid %}
+                <tr class="text-uppercase">
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.btitle}}({{i.num_copies}})</td>
+                    <td>{{i.bauthor}}</td>
+                    <td>{{i.bdept}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'editbook' i.id %}" class="btn btn-outline-info form-control">edit</a>
+                            </div>
+                            <div class="col">
+                                <a href="{% url 'delbook' i.id %}" class="btn btn-outline-danger form-control">delete</a>
+                            </div>
+                             
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

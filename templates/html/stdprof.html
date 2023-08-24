@@ -1,0 +1,45 @@
+{% extends 'html/base.html' %}
+{% block title %}Student Profile{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mr-2 card shadow-lg border rounded border-info h-100">
+         <h3  class="bg-secondary text-light mt-2 pt-2 text-center">Student Profile:</h3>
+        <div class="card-body">
+            <h5>Student Name :{{request.user.username}}</h5>
+            <h5>Student Pin  : {{request.user.eid}} </h5>
+            <h5>Student Status : {% if request.user.stdprofile.sstatus == 1 %}<span class="badge badge-success">Active</span>{% else %}<span class="badge badge-danger">InActive</span>{% endif %}</h5>
+            <a href="{% url 'update' %}" class="btn btn-info form-control" >update profile</a>
+        </div>
+    </div>
+    {% if request.user.stdprofile.sstatus == 1 %}
+    <div class="col card shadow-lg  border rounded border-info">
+        <h3  class="bg-secondary text-light mt-2 pt-2 text-center">details of the {{request.user.username}}</h3>
+        <div class="card-body ht-100 ">
+           <table class="table">
+                <tr class="">
+                    <td>Name : {{request.user.username}} </td>
+                    <td>Year : {{request.user.stdprofile.syear}}</td>
+                    <td>Branch : {{request.user.stdprofile.sbranch}}</td>
+                </tr>
+                <tr>
+                    <td>Role Type : {% if request.user.role_type == 1 %} student
+                                    {% endif %}
+                    </td>
+                    <td>Email : {{request.user.email}}</td>
+                    <td>Status : {% if request.user.is_active == 1 %}
+                        <h5 class="badge badge-success">Active</h5>
+                        {% else %}
+                        <span class="badge badge-danger">InActive</span>
+                        {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Date joined : {{request.user.date_joined}}</td>
+                    <td>Last Login  : {{request.user.last_login}}</td>
+                </tr>
+           </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

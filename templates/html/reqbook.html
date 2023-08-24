@@ -1,0 +1,230 @@
+{% extends 'html/base.html' %}
+{% block title %}Request Book{% endblock %}
+{% block content %}
+<div class="card shadow border rounded border-primary">
+    <h3 class="card-header">Department of CSE</h3>
+    <div class="card-body">
+    <input class="form-control" style="max-width: 200px;" id="cse" type="text" placeholder="Search book..">
+     <table class="table table-hover border mt-2">
+        <thead class="text-light bg-secondary font-weight-bold">
+            <td>Sno.</td>
+            <td>Title of the book</td>
+            <td>Author</td>
+            <td>Edition no.</td>
+            <td>Actions</td>
+        </thead>
+        {% for i in cse %}
+        <tbody id="csedata">
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.btitle}}({{i.num_copies}})</td>
+                <td>{{i.bauthor}}</td>
+                <td>{{i.bedition}}</td>
+                <td>
+                    <div class="row">
+                        <div class="col">
+                            <a href="{% url 'bookview' i.id %}" class="btn btn-outline-primary">ViewBook</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>    
+        {% endfor %}
+     </table>
+
+    </div>
+    <script>
+        $(document).ready(function(){
+          $("#cse").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#csedata tr").filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+          });
+        });
+    </script>
+</div>
+
+<div class="card mt-2 shadow border rounded border-primary">
+    <h3 class="card-header">Department of ECE</h3>
+    <div class="card-body">
+        <input class="form-control" style="max-width: 200px;" id="ece" type="text" placeholder="Search book..">
+         <table class="table table-hover border mt-2">
+            <thead class="text-light bg-secondary font-weight-bold">
+                <td>Sno.</td>
+                <td>Title of the book</td>
+                <td>Author</td>
+                <td>Edition no.</td>
+                <td>Actions</td>
+            </thead>
+            {% for i in ece %}
+            <tbody id="ecedata">
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.btitle}}({{i.num_copies}})</td>
+                    <td>{{i.bauthor}}</td>
+                    <td>{{i.bedition}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'bookview' i.id %}" class="btn btn-outline-primary">ViewBook</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>    
+            {% endfor %}
+         </table>
+    
+        </div>
+        <script>
+            $(document).ready(function(){
+              $("#ece").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#ecedata tr").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+              });
+            });
+        </script>
+</div>
+
+
+<div class="card mt-2 shadow border rounded border-primary">
+    <h3 class="card-header">Department of EEE</h3>
+    <div class="card-body">
+        <input class="form-control" style="max-width: 200px;" id="eee" type="text" placeholder="Search book..">
+         <table class="table table-hover border mt-2">
+            <thead class="text-light bg-secondary font-weight-bold">
+                <td>Sno.</td>
+                <td>Title of the book</td>
+                <td>Author</td>
+                <td>Edition no.</td>
+                <td>Actions</td>
+            </thead>
+            {% for i in eee %}
+            <tbody id="eeedata">
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.btitle}}({{i.num_copies}})</td>
+                    <td>{{i.bauthor}}</td>
+                    <td>{{i.bedition}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'bookview' i.id %}" class="btn btn-outline-primary">ViewBook</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>    
+            {% endfor %}
+         </table>
+    
+        </div>
+        <script>
+            $(document).ready(function(){
+              $("#eee").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#eeedata tr").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+              });
+            });
+        </script>
+</div>
+
+
+<div class="card mt-2 shadow border rounded border-primary">
+    <h3 class="card-header">Department of MECH</h3>
+    <div class="card-body">
+        <input class="form-control" style="max-width: 200px;" id="mech" type="text" placeholder="Search book..">
+         <table class="table table-hover border mt-2">
+            <thead class="text-light bg-secondary font-weight-bold">
+                <td>Sno.</td>
+                <td>Title of the book</td>
+                <td>Author</td>
+                <td>Edition no.</td>
+                <td>Actions</td>
+            </thead>
+            {% for i in mech %}
+            <tbody id="mechdata">
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.btitle}}({{i.num_copies}})</td>
+                    <td>{{i.bauthor}}</td>
+                    <td>{{i.bedition}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'bookview' i.id %}" class="btn btn-outline-primary">ViewBook</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>    
+            {% endfor %}
+         </table>
+    
+        </div>
+        <script>
+            $(document).ready(function(){
+              $("#mech").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#mechdata tr").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+              });
+            });
+        </script>
+</div>
+
+
+<div class="card mt-2 shadow border rounded border-primary">
+    <h3 class="card-header">Department of CIVIL</h3>
+    <div class="card-body">
+        <input class="form-control" style="max-width: 200px;" id="civil" type="text" placeholder="Search book..">
+         <table class="table table-hover border mt-2">
+            <thead class="text-light bg-secondary font-weight-bold ">
+                <td>Sno.</td>
+                <td>Title of the book</td>
+                <td>Author</td>
+                <td>Edition no.</td>
+                <td>Actions</td>
+            </thead>
+            {% for i in civil %}
+            <tbody id="civildata">
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.btitle}}({{i.num_copies}})</td>
+                    <td>{{i.bauthor}}</td>
+                    <td>{{i.bedition}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'bookview' i.id %}" class="btn btn-outline-primary">ViewBook</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>    
+            {% endfor %}
+         </table>
+    
+        </div>
+        <script>
+            $(document).ready(function(){
+              $("#civil").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#civildata tr").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+              });
+            });
+        </script>
+</div>
+ 
+
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'html/base.html' %}
+{% block title %}Editbook{% endblock  %}
+{% block content %}
+<div class="card col-md-5 mx-auto border rounded border-secondary">
+    <h4  class="bg-warning text-light mt-2 pt-2 text-center">Edit Book</h4>
+    <form method="post">
+        {% csrf_token %}
+        <div class="card-body">
+            {% for i in edit %}
+            {{i}}
+            {% endfor %}
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'addbook' %}" class="btn btn-primary form-control">Back</a>
+                </div>
+                <div class="col">
+                    <input type="submit" class="btn btn-warning form-control" value="Change">
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endblock content %}

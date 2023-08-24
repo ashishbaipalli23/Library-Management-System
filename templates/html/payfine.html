@@ -1,0 +1,73 @@
+{% extends 'html/base.html' %}
+{% block title %}Pay Fine{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4 h-100 mr-2 card border rounded border-warning ">
+        <h4 class="card-header">Payment</h4>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="amt" class="mt-2 form-control" value="{{fine}}" readonly>
+                <input type="text" name="mobile" class="form-control mt-2"  placeholder="Enter your mobile.no">
+                <input type="text" name="debit" class="mt-2 form-control" placeholder="Enter debit card no">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="date" name="endDate" class="mt-2 form-control" placeholder="experydate">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="cvv" class="mt-2 form-control" placeholder="Enter Cvv">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'sdashboard' %}" class="btn btn-secondary form-control mt-2">Back</a>
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="mt-2 form-control btn btn-success">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="col card h-100 mr-2 border rounded border-warning">
+        <h4 class="card-header">Payment History</h4>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+             {{message}}
+          </div>
+        {% endfor %}
+    {% endif %}
+        <div class="card-body mr-2">
+            <table class="table table-hover">
+               <thead class="bg-secondary text-light">
+                <tr>
+                    <th>Sno.</th>
+                    <th>Transaction Amount</th>
+                    <th>Transaction Date</th>
+                    <th>Transaction Status</th>
+                </tr>    
+               </thead> 
+               <tbody>
+                   {% for pay in payhistory %}
+                   <tr>
+                       <td>{{forloop.counter}}</td>
+                       <td>Rs.{{pay.paid_amount}}/-</td>
+                       <td>{{pay.paid_date}}</td>
+                       <td>
+                        {% if not pay.paid_status %}
+                           <span class="badge badge-success">Success</span>
+                        {% else %}
+                        <span class="badge badge-success">Failed</span>
+                        {% endif %}
+                       </td>
+                   </tr>
+                   {% endfor %}
+               </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

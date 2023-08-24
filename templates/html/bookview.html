@@ -1,0 +1,26 @@
+{% extends 'html/base.html' %}
+{% block title %}BookView{% endblock title %}
+{% block content %}
+<div class="card col-md-6 mx-auto border rounded border-secondary">
+    <h4 class="bg-warning text-light mt-2 pt-2 text-center">Book Information</h4>
+    <div class="card-body">
+        <h6>Title Of The Book  : <span style="font-weight: 400;">{{bookview.btitle}}</span></h6>
+        <h6>Author Of The Book : <span style="font-weight: 400;">{{bookview.bauthor}}</span></h6>
+        <h6>Book Edition       : <span style="font-weight: 400;">{{bookview.bedition}}</span> </h6>
+        <h6>Book Description   : <span style="font-weight: 400;">{{bookview.bdes}}</span></h6>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'reqbk' %}" class="btn btn-info form-control">Back</a>
+                </div>
+                <div class="col">
+                    <input type="submit" class="btn btn-success form-control" value="Request">
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
